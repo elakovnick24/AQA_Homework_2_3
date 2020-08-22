@@ -74,5 +74,7 @@ public class deliveryCard {
         $("[data-test-id=agreement]").click();
         $$("button").find(exactText("Запланировать")).click();
         $("[data-test-id=success-notification]").find(withText("Успешно!")).waitUntil(visible, 15000);
+
     }
+
 }
