@@ -1,27 +1,17 @@
-  plugins {
-    id 'java'
-  }
+image: Ubuntu1804  # образ для сборки
 
-    group 'ru.netology'
-    version '1.0-SNAPSHOT'
+branches:
+  only:
+    - master  # ветка git
 
-    sourceCompatibility = 1.8
+build: off  # будем использовать свой скрипт сборки
 
-    // кодировка файлов (если используете русский язык в файлах)
-    compileJava.options.encoding = "UTF-8"
-    compileTestJava.options.encoding = "UTF-8"
+install:
+  # запускаем SUT (запоминаем информацию о процессе в переменной $App)
+  - ps: $App = Start-Process -FilePath java -ArgumentList "-jar ./artifacts/app-card-delivery.jar" -PassThru
 
-    repositories {
-    mavenCentral()
-  }
+build_script:
+  - ps: ./gradlew test --info "-Dselenide.headless=true"  # стартуем Selenide в Headless-режиме (см.ниже)
 
-    dependencies {
-    testImplementation 'org.junit.jupiter:junit-jupiter:5.5.1'
-    testImplementation 'com.codeborne:selenide:5.3.1'
-  }
-
-    test {
-    useJUnitPlatform()
-    // в тестах, вызывая `gradlew test -Dselenide.headless=true` будем передавать этот параметр в JVM (где его подтянет Selenide)
-    systemProperty 'selenide.headless', System.getProperty('selenide.headless')
-  }
+on_finish:
+  - ps: Stop-Process -Id $App.Id  # оставливаем SUT
