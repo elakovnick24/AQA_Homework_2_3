@@ -55,7 +55,7 @@ public class DeliveryCard {
         $("[data-test-id=phone] input").setValue(forms.getPhone());
         $("[data-test-id=agreement]").click();
         $$("button").find(exactText("Запланировать")).click();
-        $("[data-test-id=success-notification]").find(withText("Успешно!"));
+        $("[data-test-id=success-notification]").find(withText("Успешно!")).shouldBe(visible);
 
     }
 }
