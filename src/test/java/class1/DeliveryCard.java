@@ -28,20 +28,8 @@ import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selectors.withText;
 import static com.codeborne.selenide.Selenide.*;
 
-@Data
-class Annotation {
-    @NonNull
-    private  String name;
-    @NonNull
-    private String phone;
-    @NonNull
-    private String city;
-    @NonNull
-    private String date;
 
-}
-
-public class deliveryCard {
+public class DeliveryCard {
 
     private Faker faker;
 
@@ -54,16 +42,10 @@ public class deliveryCard {
     }
     @Test
     void shoudDeliveryCard() {
-        /*Date nowDate = Date.from(LocalDate.now().plusDays(3).atStartOfDay(ZoneId.systemDefault()).toInstant());
-        Date futureDate = faker.date().future(10, TimeUnit.DAYS, nowDate);
+        Date nowDate = Date.from(LocalDate.now().plusDays(3).atStartOfDay(ZoneId.systemDefault()).toInstant());
+        String date = new SimpleDateFormat("dd.MM.yyyy").format(faker.date().future(10, TimeUnit.DAYS, nowDate));
 
-        *//*String dateInString = futureDate.toString();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEE, d MMM yyyy", Locale.ENGLISH);
-        LocalDate dateTime = LocalDate.parse(dateInString, formatter);*/
-
-        // не получается отформатировать дату. Оставил закомменченный код, чтобы Вы могли посмотреть какие методы использовал
-
-        Annotation forms = new Annotation(faker.name().fullName(), faker.phoneNumber().phoneNumber(), faker.address().city(),"25.08.2020");
+        Annotation forms = new Annotation(faker.name().fullName(), faker.phoneNumber().phoneNumber(), faker.address().city(), date);
 
         open("http://localhost:9999");
         $("[placeholder='Город']").setValue(forms.getCity());
@@ -73,8 +55,7 @@ public class deliveryCard {
         $("[data-test-id=phone] input").setValue(forms.getPhone());
         $("[data-test-id=agreement]").click();
         $$("button").find(exactText("Запланировать")).click();
-        $("[data-test-id=success-notification]").find(withText("Успешно!")).waitUntil(visible, 15000);
+        $("[data-test-id=success-notification]").find(withText("Успешно!"));
 
     }
-
 }
