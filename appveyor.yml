@@ -1,5 +1,7 @@
 image: Ubuntu1804  # образ для сборки
 
+stack: jdk 8
+
 branches:
   only:
     - master  # ветка git
