@@ -3,6 +3,7 @@ package data;
 import com.github.javafaker.Faker;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import sun.util.resources.LocaleData;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -11,6 +12,9 @@ import java.util.Locale;
 
 @Data
 public class DataGenerator {
+
+    private static LocalDate futureDate = LocalDate.now().plusDays(10);
+    public static String date = new SimpleDateFormat("dd.MM.yyyy").format(futureDate);
 
     public static class Registration {
         private Registration() {
@@ -22,7 +26,7 @@ public class DataGenerator {
                     faker.name().fullName(),
                     faker.phoneNumber().phoneNumber(),
                     faker.address().city(),
-                    "01.09.2020"
+                    date
             );
         }
 
