@@ -3,18 +3,17 @@ package data;
 import com.github.javafaker.Faker;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import sun.util.resources.LocaleData;
-
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.Locale;
 
 @Data
 public class DataGenerator {
 
-    private static LocalDate futureDate = LocalDate.now().plusDays(10);
-    public static String date = new SimpleDateFormat("dd.MM.yyyy").format(futureDate);
+    static LocalDate futureDate = LocalDate.now().plusDays(10);
+    static String date = DateTimeFormatter.ofPattern("dd.MM.yyyy").format(futureDate);
 
     public static class Registration {
         private Registration() {
